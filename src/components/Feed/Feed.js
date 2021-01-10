@@ -11,7 +11,7 @@ const Feed = ({ tasks, auth }) => {
     <FeedContainer>
       {
         tasks.map(task => (
-          <Paper>
+          <Paper key={task.id}>
             <div>
               <p>{task.name}</p>
             </div>

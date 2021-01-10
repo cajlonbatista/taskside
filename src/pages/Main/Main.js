@@ -28,6 +28,7 @@ const Main = ({ auth, dispatch }) => {
     e.preventDefault();
     setLoading(true);
     await dispatch(addTask({
+      id: Math.random(),
       user: auth.user.id,
       name,
       delivery,

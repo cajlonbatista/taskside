@@ -10,6 +10,15 @@ export const MainContainer = styled.main`
       position: absolute;
       bottom: 20px;
       right: 20px;
+      button{
+        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.133), 0 0.6px 2px rgba(0, 0, 0, 0.1);
+        :hover{
+          background: #EA8023; 
+        }
+        svg{
+          fill: white;
+        }
+      }
     }
   }
 `;
@@ -55,6 +64,7 @@ export const TaskCreate = styled.form`
     margin: 40px auto;  
     div{
       display: flex;
+      justify-content: space-between;
       align-items: center;
       margin: 10px auto;
     }

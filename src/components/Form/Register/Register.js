@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ import { Spin } from 'antd';
 import { RegisterContainer, RegisterForm } from './styles';
 
 function Notification(props) {
-  return <Alert elevation={40} variant='filled' {...props} />;
+  return <Alert style={{ fontFamily: 'Inter, sans-serif'}} elevation={40} variant='filled' {...props} />;
 }
 
 const Register = ({ users, dispatch }) => {
@@ -93,8 +93,6 @@ const Register = ({ users, dispatch }) => {
     const nowYear = new Date().getFullYear();
     if ((nowYear - birthYear) <= 12) {
       setSnackBarVerifyBirth(true);
-    } else if (address === '' || address === 'Looking for an address ...' | cep.length !== 8) {
-      setSnackBarVerifyCep(true);
     } else {
       setLoading(true);
       const user = {
@@ -122,7 +120,7 @@ const Register = ({ users, dispatch }) => {
   return (
     <RegisterContainer>
       <span onClick={e => setRegister(true)}>Sign up</span>
-      <Dialog style={{ zIndex: 11}} fullScreen={fullScreen} open={register} onClose={closeDialogRegister}>
+      <Dialog style={{ zIndex: 11 }} fullScreen={fullScreen} open={register} onClose={closeDialogRegister}>
         <DialogContent>
           <Spin size='large' spinning={loading}>
             <RegisterForm onSubmit={onRegister}>
@@ -189,21 +187,20 @@ const Register = ({ users, dispatch }) => {
               </section>
             </RegisterForm>
           </Spin>
+          {/* Snackbars */}
+
+          <Snackbar open={snackbarVerifyBirth} autoHideDuration={3000} onClose={closeSnackbarVerifyBith}>
+            <Notification onClose={closeSnackbarVerifyBith} severity='warning'>
+              Only users over eighteen years old can register
+            </Notification>
+          </Snackbar>
+          <Snackbar open={snackbarVerifyCep} autoHideDuration={3000} onClose={closeSnackbarVerifyCep}>
+            <Notification onClose={closeSnackbarVerifyCep} severity='error'>
+              Zip Code invalid
+            </Notification>
+          </Snackbar>
         </DialogContent>
       </Dialog>
-
-      {/* Snackbars */}
-
-      <Snackbar open={snackbarVerifyBirth} autoHideDuration={3000} onClose={closeSnackbarVerifyBith}>
-        <Notification onClose={closeSnackbarVerifyBith} severity='warning'>
-          Only users over eighteen years old can register
-        </Notification>
-      </Snackbar>
-      <Snackbar anchorOrigin={{ horizontal: 'right', vertical: 'top'}} open={snackbarVerifyCep} autoHideDuration={3000} onClose={closeSnackbarVerifyCep}>
-        <Notification onClose={closeSnackbarVerifyCep} severity='error'>
-          Zip Code invalid
-        </Notification>
-      </Snackbar>
     </RegisterContainer>
   );
 };
