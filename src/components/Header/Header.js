@@ -1,52 +1,64 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 
 import { connect } from 'react-redux';
 
 import Inline from 'svg-inline-react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
-import { Dialog, DialogContent, useMediaQuery } from '@material-ui/core';
 
+import { ExitToAppTwoTone, ArrowDropDownTwoTone, AccountCircleTwoTone, SettingsTwoTone } from '@material-ui/icons';
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+
+import Login from '../Form/Login/Login';
+import Register from '../Form/Register/Register';
+
+import { toggleAuth } from '../../store/actions/actions';
 
 import { HeaderContainer } from './styles';
+import '@szhsin/react-menu/dist/index.css';
 
 import { logo } from '../../global/assets/svg/logo';
-import Login from '../Form/Login/Login';
 
 
 const Header = ({ auth, dispatch }) => {
-  const [login, setLogin] = useState(false);
-  const [register, setRegister] = useState(false);
 
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const onLoggout = e => {
+    dispatch(toggleAuth({}));
+  }
 
   return (
-    <HeaderContainer>
-      <Link>
+    <HeaderContainer style={{ justifyContent: ((auth.logged === true) ? 'space-between' : 'space-between') }}>
+      <Link to='/'>
         <Inline src={logo} />
       </Link>
       <div>
         {
           (auth.logged === true)
             ?
-            <span>{auth.user.name}</span>
+            <div>
+              <Menu align='center' menuButton={
+                <MenuButton>
+                  <p>{auth.user.name}</p>
+                  <ArrowDropDownTwoTone />
+                </MenuButton>
+              }>
+                <MenuItem>
+                  <AccountCircleTwoTone />
+                  My account
+                </MenuItem>
+                <MenuItem>
+                  <SettingsTwoTone />
+                  Settings
+                </MenuItem>
+                <MenuItem onClick={onLoggout}>
+                  <ExitToAppTwoTone />
+                  Loggout
+                </MenuItem>
+              </Menu>
+            </div>
             :
             <Fragment>
-              <div>
-                <span>Sign in</span>
-                <Dialog fullScreen={fullScreen} open={login} onClose={e => setLogin(true)}>
-            
-                </Dialog>
-              </div>
-              <div>
-                <span>Sign up</span>
-                <Dialog fullScreen={fullScreen} open={register} onClose={e => setRegister(false)}>
-                  <DialogContent>
-                    <Login/>
-                  </DialogContent>
-                </Dialog>
-              </div>
+              <Login />
+              <Register />
             </Fragment>
         }
       </div>

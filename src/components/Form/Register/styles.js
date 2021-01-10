@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
-export const LoginContainer = styled.div`
+export const RegisterContainer = styled.div`
   margin-right: 20px;
   >span{
     font-family: Noto Sans , sans-serif;
     cursor: pointer;
     font-size: 14px;
     transition: all 0.3s;
-    color: #646369;
-    :hover{
-      color: #000;
-    }
+    padding: 7px 13px;
+    background-color: #FC8C29;
+    border-radius: 5px;
   }
+  color: white;
 `;
 
-export const LoginForm = styled.form`
+export const RegisterForm = styled.form`
   width: 500px;
-  height: 500px;
+  height: 630px;
   @media(max-width: 1279px){
     width: 100%;
   }
@@ -28,19 +28,9 @@ export const LoginForm = styled.form`
     padding: 10px 5px;
     h2{
       font-family: Inter, sans-serif;
-      margin-bottom: 20px;
       font-weight: 800;
     }
-    p{
-      font-family: Inter, sans-serif;
-      color: #7d7c83;    
-    }
-    div{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    button{
+    >button{
       position: absolute;
       top: 0;
       left: 0;
@@ -50,7 +40,21 @@ export const LoginForm = styled.form`
     }
   }
   section{
-    margin-top: 100px;
+    width: 100%;
+    margin-top: 50px;
+    >article{
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
+      margin: 10px auto;
+      div{
+        width: 100%;
+        margin: 5px auto;
+        margin-bottom: 0px!important;
+      }
+    }
     div{
       width: 100%;
       max-width: 400px;
@@ -62,7 +66,7 @@ export const LoginForm = styled.form`
         position: absolute;
         fill: #7d7c83;
       }
-      >input{
+      input{
         width: 100%;
         display: block;
         padding: 10px 25px 10px 40px;
@@ -76,6 +80,9 @@ export const LoginForm = styled.form`
           border-color: #FC8C29;
         } 
       }
+      input[type='password']{
+        padding-right: 10px;
+      }
       svg:first-child{
         left: 10px;
         width: 24px;
@@ -87,9 +94,12 @@ export const LoginForm = styled.form`
         :hover, :focus{
           fill: #FC8C29;
         }
-      }  
+      }
     }
-    >button{
+    >div:last-child{
+      margin-top: 0px!important;
+    }
+    >footer button{
       display: block;
       border: 0;
       width: 100%;

@@ -8,6 +8,7 @@ import Routes from './routes/routes';
 import { store, persistor } from './store/store';
 
 import './global/styles/global.css';
+import './antd.less';
 
 const App = () => {
   return (
