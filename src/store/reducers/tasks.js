@@ -24,6 +24,16 @@ export const reducer = (state = INITIAL, action) => {
     return {
       ...state, auth: action.auth
     }
+  } else if (action.type === 'REMOVE_TASK') {
+    const position = state.tasks.indexOf(action.task);
+    const cache = [...state.tasks];
+    cache.splice(position, 1)
+    if (position > -1) {
+      return {
+        ...state, tasks: cache
+      }
+    }
+    
   }
   return state;
 }

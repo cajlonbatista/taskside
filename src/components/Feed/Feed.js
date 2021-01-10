@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { connect } from 'react-redux';
 
-import { Paper } from '@material-ui/core';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import CardTask from '../CardTask/CardTask';
 
 import { FeedContainer } from './styles';
 
 const Feed = ({ tasks, auth }) => {
   return (
     <FeedContainer>
-      {
-        tasks.map(task => (
-          <Paper key={task.id}>
-            <div>
-              <p>{task.name}</p>
-            </div>
-          </Paper>
-        ))
-      }
+      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+        <Masonry>
+          {
+            tasks.map(task => {
+              if (task.user === auth.user.id) {
+                return (
+                  <div style={{ margin: 20}} key={task.id}>
+                    <CardTask task={task} />
+                  </div>
+                )
+              } else {
+                return <Fragment />
+              }
+            })
+          }
+        </Masonry>
+      </ResponsiveMasonry>
     </FeedContainer>
   );
 };

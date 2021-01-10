@@ -118,21 +118,20 @@ const Login = ({ users, dispatch }) => {
             </LoginForm>
           </Spin>
         </DialogContent>
+
+        {/* Snackbars */}
+
+        <Snackbar open={snackbarVerifyEmail} autoHideDuration={3000} onClose={closeSnackbarVerifyEmail}>
+          <Alert onClose={closeSnackbarVerifyEmail} severity='warning'>
+            Email is not registered
+        </Alert>
+        </Snackbar>
+        <Snackbar open={snackbarVerifyPassword} autoHideDuration={3000} onClose={closeSnackbarVerifyPassword}>
+          <Alert onClose={closeSnackbarVerifyPassword} severity='warning'>
+            The password is incorrect
+        </Alert>
+        </Snackbar>
       </Dialog>
-
-      {/* Snackbars */}
-
-      <Snackbar open={snackbarVerifyEmail} autoHideDuration={3000} onClose={closeSnackbarVerifyEmail}>
-        <Alert onClose={closeSnackbarVerifyEmail} severity='warning'>
-          Email is not registered
-        </Alert>
-      </Snackbar>
-      <Snackbar open={snackbarVerifyPassword} autoHideDuration={3000} onClose={closeSnackbarVerifyPassword}>
-        <Alert onClose={closeSnackbarVerifyPassword} severity='warning'>
-          The password is incorrect
-        </Alert>
-      </Snackbar>
-
     </LoginContainer>
   );
 };

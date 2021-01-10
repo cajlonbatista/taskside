@@ -17,4 +17,10 @@ module.exports = {
       auth
     }
   },
+  removeTask(task) {
+    return {
+      type: 'REMOVE_TASK',
+      task
+    }
+  }
 }
