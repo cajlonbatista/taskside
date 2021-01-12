@@ -10,7 +10,7 @@
 
 ## :page_with_curl: About
 
-System for registering tasks proposed by Verzel, where you can be doing a simple persistent authentication on the browser's local storage and thus registering, completing, editing and deleting your tasks. You can access the project quickly by clicking here.
+System for registering tasks proposed by Verzel, where you can be doing a simple persistent authentication on the browser's local storage and thus registering, completing, editing and deleting your tasks. You can access the project quickly by clicking [here](https://taskside.vercel.app/).
 
 <span align="center"><img width="200px" src="https://raw.githubusercontent.com/cajlonbatista/taskside/feed/.github/assets/img/landing.jpg"/></span>
 <span align="center"><img width="200px" src="https://raw.githubusercontent.com/cajlonbatista/taskside/feed/.github/assets/img/login.jpg"/></span>
