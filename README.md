@@ -13,11 +13,14 @@
 ## :page_with_curl: About
 
 System for registering tasks proposed by Verzel, where you can be doing a simple persistent authentication on the browser's local storage and thus registering, completing, editing and deleting your tasks. You can access the project quickly by clicking here.
-
-<span align="center"><img width="200px" src="https://github.com/cajlonbatista/spacehunter/blob/master/assets/device.jpg?raw=true"/></span>
-<span align="center"><img width="200px" src="https://github.com/cajlonbatista/spacehunter/blob/master/assets/photos.jpg?raw=true"/></span>
-<span align="center"><img width="200px" src="https://github.com/cajlonbatista/spacehunter/blob/master/assets/news.jpg?raw=true"/></span>
-
+<span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/landing.jpg?raw=true
+"/></span><span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/login.jpg?raw=true
+"/></span>
+<span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/completed.jpg?raw=true"/></span><span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/conclude.jpg?raw=true"/></span>
+<span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/delete.jpg?raw=true"/></span><span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/editask.jpg?raw=true"/></span>
+<span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/feed.jpg?raw=true"/></span><span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/loggout.jpg?raw=true"/></span>
+<span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/newtask.jpg?raw=true"/></span><span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/option.jpg?raw=true"/></span>
+<span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/pedding.jpg?raw=true"/></span><span align="center"><img width="200px" src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/img/register.jpg?raw=true"/></span>
 ## :hammer: Technologies
 
 - [react](https://pt-br.reactjs.org/)
