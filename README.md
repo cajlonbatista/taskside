@@ -46,6 +46,10 @@ System for registering tasks proposed by Verzel, where you can be doing a simple
   # Enter the directory:
   $ cd taskside
 ```
+## 🔑 Environment variables
+  ``` bash
+    HASH = verzel
+  ```
 ## :gear: Starting
 ``` bash
   # Install the dependencies:
