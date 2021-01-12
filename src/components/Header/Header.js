@@ -1,23 +1,19 @@
 import React, { Fragment } from 'react';
 
 import { connect } from 'react-redux';
-
-import Inline from 'svg-inline-react';
 import { Link } from 'react-router-dom';
-
-import { ExitToAppTwoTone, ArrowDropDownTwoTone, AccountCircleTwoTone, SettingsTwoTone } from '@material-ui/icons';
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
-
-import Login from '../Form/Login/Login';
-import Register from '../Form/Register/Register';
-
 import { toggleAuth } from '../../store/actions/actions';
+
+import { ExitToAppTwoTone, ArrowDropDownTwoTone, AccountCircleTwoTone, SettingsTwoTone, InfoTwoTone, ContactlessTwoTone } from '@material-ui/icons';
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import Register from '../Form/Register/Register';
+import Login from '../Form/Login/Login';
+import Inline from 'svg-inline-react';
 
 import { HeaderContainer } from './styles';
 import '@szhsin/react-menu/dist/index.css';
 
 import { logo } from '../../global/assets/svg/logo';
-
 
 const Header = ({ auth, dispatch }) => {
 
@@ -26,17 +22,29 @@ const Header = ({ auth, dispatch }) => {
   }
 
   return (
-    <HeaderContainer style={{ justifyContent: ((auth.logged === true) ? 'space-between' : 'space-between') }}>
+    <HeaderContainer style={{ justifyContent: ((auth.logged === true) ? 'space-between' : 'space-evenly') }}>
       <Link to='/'>
         <Inline src={logo} />
+        Taskside
       </Link>
       <div>
         {
           (auth.logged === true)
             ?
             <div>
+              <article>
+                <Link to='/contactus'>
+                  <ContactlessTwoTone />
+                  <span>Contact us</span>
+                </Link>
+                <Link to='/about'>
+                  <InfoTwoTone />
+                  <span>About</span>
+                </Link>
+              </article>
               <Menu align='center' menuButton={
                 <MenuButton>
+                  <AccountCircleTwoTone />
                   <p>{auth.user.name}</p>
                   <ArrowDropDownTwoTone />
                 </MenuButton>

@@ -7,10 +7,7 @@ export const LoginContainer = styled.div`
     cursor: pointer;
     font-size: 14px;
     transition: all 0.3s;
-    color: #646369;
-    :hover{
-      color: #000;
-    }
+    color: #FFF;
   }
 `;
 

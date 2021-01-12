@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { AES, enc } from 'crypto-js';
 import { connect } from 'react-redux';
 import { toggleAuth } from '../../../store/actions/actions';
 
@@ -60,7 +61,7 @@ const Login = ({ users, dispatch }) => {
       if (dataProcess.email === undefined) {
         setSnackbarVerifyEmail(true);
       } else {
-        if (dataProcess.password === password) {
+        if (AES.decrypt(dataProcess.password, process.env.REACT_APP_HASH).toString(enc.Utf8) === password) {
           setLoading(true);
           await dispatch(toggleAuth({
             user: dataProcess,

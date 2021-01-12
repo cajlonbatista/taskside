@@ -12,6 +12,7 @@ export const CardTaskContainer = styled(Paper)`
     p{
       font-family: Inter, sans-serif;
       font-size: 14px;
+      text-align: justify;
     }
   }
   >div:last-child{
@@ -75,26 +76,97 @@ export const CardTaskContainer = styled(Paper)`
   }
 `;
 
+export const DialogView = styled.div`
+  width: 500px;
+  height: 500px;
+  @media(max-width: 1279px){
+    width: 100%;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px 5px;
+    >button{
+      position: absolute;
+      top: 0;
+      left: 0;
+      :hover{
+        background: transparent; 
+      }
+    }
+    >span, div{
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+      svg{
+        margin-right: 10px;
+        fill: white;
+      }
+    }
+    >span:last-child{
+      background-color: #fc8c29;
+      svg{
+        animation: spin 1s infinite;
+      }
+    }
+    >div:last-child{
+      background-color: #a9ba5a;
+    }
+  }
+  section{
+    margin: 20px auto;
+    p{
+      font-family: Inter, sans-serif;
+      text-align: justify;
+      font-size: 14px;
+    }
+    p:last-child, span{
+      text-align: center;
+      margin-top: 20px;
+      line-height: 20px;
+      border-bottom: 1px solid #fc8c29;
+      color: #fc8c29;
+    }
+    span:last-child{
+      color: #a9ba5a;
+      border-color: #a9ba5a;
+    }
+  }
+`;
+
 export const DialogDelete = styled.div`
+  width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   header:first-child{
+    width: 100%;
     justify-content: space-between;
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    margin-bottom: 40px;
     svg{
       width: 40px;
       height: 40px;
-      position: absolute;
-      top: -5px;
-      left: -5px;
+      fill: #e66353;
+      animation: heartbeat 1s infinite;
+      margin-right: 20px;
     }
     span{
-      font-family: Inter, sans-serif;
-      margin-bottom: 20px;
+      font-family: Noto Sans, sans-serif;
       font-weight: 400;
-      font-size: 18px;
-      color: #7d7c83;
+      font-size: 16px;
+      color: #303030;
     }
   }
   div:last-child{
@@ -102,8 +174,68 @@ export const DialogDelete = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    button{
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      text-transform: capitalize; 
+      padding: 7px 30px;
+    }
     button:first-child{
       margin-right: 20px;
+    }
+    button:last-child{
+      background-color: #e66353;
+      color: white;
+    }
+  }
+`;
+
+
+export const DialogConclude = styled.main`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  header:first-child{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    svg{
+      width: 40px;
+      height: 40px;
+      fill: #a9ba5a;
+      animation: heartbeat 1s infinite;
+      margin-right: 20px;
+    }
+    span{
+      font-family: Noto Sans, sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      color: #303030;
+    }
+  }
+  div:last-child{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    button{
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      text-transform: capitalize;
+      padding: 7px 30px;
+    }
+    button:first-child{
+      margin-right: 20px;
+    }
+    button:last-child{
+      background-color: #a9ba5a;
+      color: white;
     }
   }
 `;

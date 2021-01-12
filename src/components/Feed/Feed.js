@@ -16,7 +16,7 @@ const Feed = ({ tasks, auth }) => {
             tasks.map(task => {
               if (task.user === auth.user.id) {
                 return (
-                  <div style={{ margin: 20}} key={task.id}>
+                  <div style={{ margin: 20 }} key={task.id}>
                     <CardTask task={task} />
                   </div>
                 )

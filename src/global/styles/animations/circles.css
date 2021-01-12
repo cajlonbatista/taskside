@@ -1,0 +1,11 @@
+@keyframes circles {
+  0% {
+    color: #FC8C29;
+  }
+  50% {
+    color: #404040;
+  }
+  100% {
+    color: #FC8C29;
+  }
+}

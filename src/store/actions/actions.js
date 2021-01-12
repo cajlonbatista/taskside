@@ -22,5 +22,11 @@ module.exports = {
       type: 'REMOVE_TASK',
       task
     }
+  },
+  putTask(task) {
+    return {
+      type: 'PUT_TASK',
+      task
+    }
   }
 }

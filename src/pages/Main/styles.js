@@ -5,9 +5,12 @@ export const MainContainer = styled.main`
   height: 100vh;
   position: relative;
   padding-top: 130px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  
   >main{
     footer{
-      position: absolute;
+      position: fixed;
       bottom: 20px;
       right: 20px;
       button{
@@ -26,6 +29,9 @@ export const MainContainer = styled.main`
 export const TaskCreate = styled.form`
   width: 500px;
   height: 500px;
+  @media(max-width: 1279px){
+    width: 100%;
+  }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -68,7 +74,11 @@ export const TaskCreate = styled.form`
       align-items: center;
       margin: 10px auto;
     }
-    input{
+    textarea{
+      height: 80px;
+      resize: none;
+    }
+    textarea, input{
       width: 100%;
       padding: 7px 10px;
       border-radius: 7px;

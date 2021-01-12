@@ -8,10 +8,10 @@ export const RegisterContainer = styled.div`
     font-size: 14px;
     transition: all 0.3s;
     padding: 7px 13px;
-    background-color: #FC8C29;
+    background-color: #FFF;
     border-radius: 5px;
+    color: #fc8c29;
   }
-  color: white;
 `;
 
 export const RegisterForm = styled.form`
@@ -45,20 +45,23 @@ export const RegisterForm = styled.form`
     >article{
       width: 100%;
       max-width: 400px;
-      display: flex;
+      margin: 5px auto;
+      display: grid;
+      grid-gap: 5px;
       grid-template-columns: 1fr 1fr;
-      grid-gap: 10px;
-      margin: 10px auto;
+      @media(max-width: 500px){
+        display: flex;
+        flex-direction: column;
+      }
       div{
         width: 100%;
-        margin: 5px auto;
-        margin-bottom: 0px!important;
+        margin-right: 5px;
       }
     }
     div{
       width: 100%;
       max-width: 400px;
-      margin: 20px auto;
+      margin: 7px auto;
       display: flex;
       align-items: center;
       position: relative;
@@ -80,8 +83,11 @@ export const RegisterForm = styled.form`
           border-color: #FC8C29;
         } 
       }
-      input[type='password']{
-        padding-right: 10px;
+      input[type='date']{
+        padding: 9px 10px 9px 40px;
+      }
+      input[type='number']{
+        padding: 10px;
       }
       svg:first-child{
         left: 10px;
@@ -96,29 +102,30 @@ export const RegisterForm = styled.form`
         }
       }
     }
-    >div:last-child{
-      margin-top: 0px!important;
-    }
-    >footer button{
-      display: block;
-      border: 0;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
-      border-radius: 10px;
-      padding: 15px 20px;
-      color: #FFF;
-      font-family: Inter, sans-serif;
-      font-weight: 600;
-      font-size: 14px;
-      margin-top: 50px;
-      background: #FC8C29;
-      outline: none;
-      transition: all 0.3s;
-      cursor: pointer;
-      :focus{
-        background: #EA8023;
-      }
+  }
+  >button{
+    display: block;
+    border: 0;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding: 15px 20px;
+    color: #FFF;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 50px;
+    background: #FC8C29;
+    outline: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    :focus{
+      background: #EA8023;
     }
   }
+`;
+
+export const Bounce = styled.section`
+
 `;

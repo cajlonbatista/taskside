@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 import { connect } from 'react-redux';
+import validatorCPF from 'validar-cpf';
+import { AES } from 'crypto-js';
 import { addUser, toggleAuth } from '../../../store/actions/actions';
+import { removeMaskCEP, removeMaskCPF } from '../../../utils/removeMask';
 
 import {
   Close,
@@ -16,16 +19,17 @@ import {
   RoomTwoTone,
   DateRangeTwoTone
 } from '@material-ui/icons';
-import { Dialog, DialogContent, IconButton, Snackbar, useMediaQuery } from '@material-ui/core';
+import { Dialog, DialogContent, IconButton, Snackbar, Tooltip, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import InputMask from 'react-input-mask';
 import { Alert } from '@material-ui/lab';
 import { Spin } from 'antd';
 
+
 import { RegisterContainer, RegisterForm } from './styles';
 
-function Notification(props) {
-  return <Alert style={{ fontFamily: 'Inter, sans-serif'}} elevation={40} variant='filled' {...props} />;
+const Notification = props => {
+  return <Alert style={{ fontFamily: 'Inter, sans-serif' }} elevation={10} variant='filled' {...props} />;
 }
 
 const Register = ({ users, dispatch }) => {
@@ -33,9 +37,10 @@ const Register = ({ users, dispatch }) => {
 
   const [snackbarVerifyBirth, setSnackBarVerifyBirth] = useState(false);
   const [snackbarVerifyCep, setSnackBarVerifyCep] = useState(false);
+  const [snackbarVerifyEmail, setSnackBarVerifyEmail] = useState(false);
+  const [snackbarVerifyCpf, setSnakBarVerifyCpf] = useState(false);
 
   const [passwordVisibility, setPasswordVisibility] = useState('password');
-  const [simuletedBirth, setSimuletedBirth] = useState('text');
 
   const [loading, setLoading] = useState(false);
 
@@ -67,52 +72,108 @@ const Register = ({ users, dispatch }) => {
     }
     setSnackBarVerifyCep(false);
   }
+  const closeSnackbarVerifyEmail = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarVerifyEmail(false);
+  }
+  const closeSnackBarVerifyCpf = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnakBarVerifyCpf(false);
+  }
 
   const getCepAddress = async () => {
     setLoading(true);
-    var cepla = '';
-    for (const i of cep) {
-      if (i !== '-') {
-        cepla += i;
-      }
-    }
-    axios.get(`https://cep.awesomeapi.com.br/json/${cepla}`).then(res => {
-      const { address, district } = res.data;
-      setAddress(`${address}, ${district}`);
-      setLoading(false);
-    }).catch(err => {
+    const newCEP = removeMaskCEP(cep);
+
+    if (newCEP.length < 8) {
+      setSnackBarVerifyCep(true);
       setLoading(false);
       setAddress('');
-      setSnackBarVerifyCep(true);
-    })
+    } else {
+      axios.get(`https://cep.awesomeapi.com.br/json/${newCEP}`).then(res => {
+        const { address, district } = res.data;
+        setAddress(`${address}, ${district}`);
+        setLoading(false);
+        return true;
+      }).catch(err => {
+        setLoading(false);
+        setAddress('');
+        setSnackBarVerifyCep(true);
+        return false;
+      })
+    }
   }
 
   const onRegister = async e => {
     e.preventDefault();
     const birthYear = new Date(birth).getFullYear();
     const nowYear = new Date().getFullYear();
-    if ((nowYear - birthYear) <= 12) {
-      setSnackBarVerifyBirth(true);
+    if (users.length !== 0) {
+      for (const user of users) {
+        if (user.email !== email || users.length === 0) { // !User already exists?
+          if ((nowYear - birthYear) <= 12) { // !User is under 12 years old ?  
+            setSnackBarVerifyBirth(true);
+          } else if (!validatorCPF(removeMaskCPF(cpf))) { // !Is the CPF valid? 
+            setSnakBarVerifyCpf(true);
+          } else if (!getCepAddress()) {
+            setSnackBarVerifyCep(true);
+          } else {
+            setLoading(true);
+            const user = {
+              id: Math.random(),
+              name,
+              email,
+              password: AES.encrypt(password, process.env.REACT_APP_HASH).toString(),
+              birth,
+              cep,
+              cpf,
+              address,
+              number
+            };
+            await dispatch(addUser(user));
+            await dispatch(toggleAuth({
+              user,
+              logged: true,
+            }))
+            setLoading(false);
+            setRegister(false);
+          }
+        } else {
+          setSnackBarVerifyEmail(true);
+        }
+      }
     } else {
-      setLoading(true);
-      const user = {
-        id: Math.random(),
-        name,
-        email,
-        password,
-        birth,
-        cep,
-        cpf,
-        address,
-        number
-      };
-      await dispatch(addUser(user));
-      await dispatch(toggleAuth({
-        user,
-        logged: true,
-      }))
-      setLoading(false);
-      setRegister(false);
+      if ((nowYear - birthYear) <= 12) {// !User is under 12 years old ?  
+        setSnackBarVerifyBirth(true);
+      } else if (!validatorCPF(removeMaskCPF(cpf))) { // !Is the CPF valid? 
+        setSnakBarVerifyCpf(true);
+      } else if (!getCepAddress()) {
+        setSnackBarVerifyCep(true);
+      } else {
+        setLoading(true);
+        const user = {
+          id: Math.random(),
+          name,
+          email,
+          password: AES.encrypt(password, process.env.REACT_APP_HASH).toString(),
+          birth,
+          cep,
+          cpf,
+          address,
+          number
+        };
+        await dispatch(addUser(user));
+        await dispatch(toggleAuth({
+          user,
+          logged: true,
+        }))
+        setLoading(false);
+        setRegister(false);
+      }
     }
   }
 
@@ -133,29 +194,37 @@ const Register = ({ users, dispatch }) => {
               <section>
                 <div>
                   <AccountCircleTwoTone />
-                  <input type='text' autoComplete='off' value={name} onChange={e => setName(e.target.value)} name='name' placeholder='Full Name' required />
+                  <Tooltip title='Name'>
+                    <input type='text' autoComplete='off' value={name} onChange={e => setName(e.target.value)} name='name' placeholder='Full Name' required />
+                  </Tooltip>
                 </div>
                 <div>
                   <EmailTwoTone />
-                  <input type='email' autoComplete='off' value={email} onChange={e => setEmail(e.target.value)} name='email' placeholder='Email' required />
+                  <Tooltip title='Email' arrow>
+                    <input type='email' autoComplete='off' value={email} onChange={e => setEmail(e.target.value)} name='email' placeholder='Email' required />
+                  </Tooltip>
                 </div>
                 <article>
                   <div>
                     <DateRangeTwoTone />
-                    <input type={simuletedBirth} autoComplete='off' onBlur={e => {
-                      (e.target.value === '') ? setSimuletedBirth('text') : setSimuletedBirth('date');
-                    }} onFocus={e => setSimuletedBirth('date')} value={birth} onChange={e => {
-                      setBirth(e.target.value);
-                    }} name='bith' placeholder='Birthday' required />
+                    <Tooltip title='Date of birth' arrow>
+                      <input type='date' autoComplete='off' value={birth} onChange={e => {
+                        setBirth(e.target.value);
+                      }} name='bith' placeholder='Birthday' required />
+                    </Tooltip>
                   </div>
                   <div>
                     <FingerprintTwoTone />
-                    <InputMask type='text' autoComplete='off' value={cpf} onChange={e => setCpf(e.target.value)} name='cpf' placeholder='CPF' mask='999.999.999-99' maskChar=' ' />
+                    <Tooltip title='CPF' arrow>
+                      <InputMask type='text' autoComplete='off' value={cpf} onChange={e => setCpf(e.target.value)} name='cpf' placeholder='CPF' mask='999.999.999-99' maskChar=' ' />
+                    </Tooltip>
                   </div>
                 </article>
                 <div>
                   <LockTwoTone />
-                  <input type={passwordVisibility} value={password} onChange={e => setPassword(e.target.value)} autoComplete='off' name='password' placeholder='Password' required />
+                  <Tooltip title='Password' arrow>
+                    <input type={passwordVisibility} value={password} onChange={e => setPassword(e.target.value)} autoComplete='off' name='password' placeholder='Password' required />
+                  </Tooltip>
                   {
                     (password !== '')
                       ?
@@ -171,32 +240,47 @@ const Register = ({ users, dispatch }) => {
                 <article>
                   <div>
                     <MyLocationTwoTone />
-                    <InputMask type='text' autoComplete='off' onBlur={getCepAddress} value={cep} onChange={e => setCep(e.target.value)} name='cep' placeholder='CEP' mask='99999-999' maskChar=' ' />
+                    <Tooltip title='CEP' arrow>
+                      <InputMask type='text' autoComplete='off' onBlur={getCepAddress} value={cep} onChange={e => setCep(e.target.value)} name='cep' placeholder='CEP' mask='99999-999' maskChar=' ' />
+                    </Tooltip>
                   </div>
                   <div>
-                    <input type='number' autoComplete='off' value={number} onChange={e => setNumber(e.target.value)} placeholder='Number' />
+                    <Tooltip title='Number' arrow>
+                      <input type='number' autoComplete='off' value={number} onChange={e => setNumber(e.target.value)} placeholder='Number' />
+                    </Tooltip>
                   </div>
                 </article>
                 <div>
                   <RoomTwoTone />
-                  <input type='text' autoComplete='off' value={address} onChange={e => setAddress(e.target.value)} placeholder='Address' />
+                  <Tooltip title='Address' arrow>
+                    <input type='text' autoComplete='off' value={address} onChange={e => setAddress(e.target.value)} placeholder='Address' />
+                  </Tooltip>
                 </div>
-                <footer>
-                  <button>Create your account</button>
-                </footer>
               </section>
+              <button>Create your account</button>
             </RegisterForm>
           </Spin>
+
           {/* Snackbars */}
 
           <Snackbar open={snackbarVerifyBirth} autoHideDuration={3000} onClose={closeSnackbarVerifyBith}>
             <Notification onClose={closeSnackbarVerifyBith} severity='warning'>
-              Only users over eighteen years old can register
+              Only users over 12 years old can register
+            </Notification>
+          </Snackbar>
+          <Snackbar open={snackbarVerifyEmail} autoHideDuration={3000} onClose={closeSnackbarVerifyEmail}>
+            <Notification onClose={closeSnackbarVerifyEmail} severity='warning'>
+              Email is already registered
             </Notification>
           </Snackbar>
           <Snackbar open={snackbarVerifyCep} autoHideDuration={3000} onClose={closeSnackbarVerifyCep}>
             <Notification onClose={closeSnackbarVerifyCep} severity='error'>
               Zip Code invalid
+            </Notification>
+          </Snackbar>
+          <Snackbar open={snackbarVerifyCpf} autoHideDuration={3000} onClose={closeSnackBarVerifyCpf}>
+            <Notification onClose={closeSnackBarVerifyCpf} severity='error'>
+              CPF is invalid
             </Notification>
           </Snackbar>
         </DialogContent>
