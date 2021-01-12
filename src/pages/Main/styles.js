@@ -5,10 +5,12 @@ export const MainContainer = styled.main`
   height: 100vh;
   position: relative;
   padding-top: 130px;
-  overflow-x: hidden;
   overflow-y: auto;
-  
+  overflow-x: hidden;
+
   >main{
+    height: 100%;
+    width: 100%;
     footer{
       position: fixed;
       bottom: 20px;
