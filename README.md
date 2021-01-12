@@ -1,5 +1,3 @@
-<p align="center"><img src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/svg/logo.svg" width="150px" align="center"></p>
-
 <h1 align="center">Taskside</h1>
 
 <p align="center">
@@ -51,7 +49,7 @@ System for registering tasks proposed by Verzel, where you can be doing a simple
 ```
 ## 🔑 Environment variables
   ``` bash
-    HASH = verzel
+    REACT_APP_HASH = verzel
   ```
 ## :gear: Starting
 ``` bash
