@@ -1,4 +1,4 @@
-<p align="center"><img src="./.github/assets/svg/logo.svg" width="150px" align="center"></p>
+<p align="center"><img src="https://github.com/cajlonbatista/taskside/blob/feed/.github/assets/svg/logo.svg" width="150px" align="center"></p>
 
 <h1 align="center">Taskside</h1>
 
